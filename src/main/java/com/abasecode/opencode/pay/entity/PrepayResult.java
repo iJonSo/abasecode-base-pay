@@ -1,5 +1,6 @@
 package com.abasecode.opencode.pay.entity;
 
+import com.abasecode.opencode.pay.plugin.wechatpay.entity.MicroParam;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -17,6 +18,16 @@ import java.io.Serializable;
 public class PrepayResult implements Serializable {
 
     private static final long serialVersionUID = -7401634860330043604L;
+    /**
+     * 支付宝和微信公众号扫码的url
+     */
     private String url;
-    private String prePayResult;
+    /**
+     * 预支付的中文信息
+     */
+    private String msg;
+    /**
+     * 微信小程序独有
+     */
+    private MicroParam param;
 }

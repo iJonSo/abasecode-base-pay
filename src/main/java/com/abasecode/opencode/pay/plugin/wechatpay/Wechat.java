@@ -118,6 +118,7 @@ public class Wechat {
      * 公众号：付款流程，第二步的第3小步
      * 小程序：付款流程，第二步
      * 用于发送给微信服务器，以便获得prepay_id
+     *
      * @param payType
      * @param baseOrder
      * @param payer
@@ -162,12 +163,13 @@ public class Wechat {
 
     /**
      * 付款流程：小程序第1步（仅1步）
+     *
      * @param order 订单信息
-     * @param code 前端的code
+     * @param code  前端的code
      * @return 小程序前端需要的参数（WechatClientPayParam）
      * @throws Exception
      */
-    public WechatClientPayParam jsapiMicroPay(BaseOrder order,String code) throws Exception {
+    public WechatClientPayParam jsapiMicroPay(BaseOrder order, String code) throws Exception {
         if (null == order) {
             throw new Exception(PayConstant.MSG_NOT_NULL_ORDER);
         }
@@ -182,8 +184,9 @@ public class Wechat {
 
     /**
      * 向微信服务器发起请求获得prepay_id
+     *
      * @param appId appid
-     * @param json 要传给微信服务器的参数json
+     * @param json  要传给微信服务器的参数json
      * @return 小程序前端需要的参数（WechatClientPayParam）
      * @throws Exception
      */
@@ -202,6 +205,7 @@ public class Wechat {
 
     /**
      * 小程序获得 openId
+     *
      * @param code 传入前端的code
      * @return Code2SessionResult（含openId）
      * @throws Exception
@@ -213,7 +217,6 @@ public class Wechat {
         Code2SessionResult r = WechatHttp.httpGet(url, "", Code2SessionResult.class);
         return r;
     }
-
 
 
 }

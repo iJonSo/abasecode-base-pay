@@ -1,6 +1,7 @@
 package com.abasecode.opencode.pay.entity;
 
 //import jakarta.validation.constraints.NotNull;
+
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -19,7 +20,7 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 public class BaseOrder implements Serializable {
-    private static final long serialVersionUID = -1L;
+    private static final long serialVersionUID = -7763939648278838911L;
     /**
      * 订单号，32位
      */

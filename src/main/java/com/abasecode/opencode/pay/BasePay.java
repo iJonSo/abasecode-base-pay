@@ -47,11 +47,12 @@ public class BasePay {
      * @param payChannel 支付通道
      * @param payType    支付类型
      * @param order      订单
+     * @param code       微信小程序前端返回的code
      * @return 预支付信息：支付宝返回前端可调用支付表单，微信返回前端调用的url
      * @throws AlipayApiException
      * @throws UnsupportedEncodingException
      */
-    public PrepayResult prepay(PayChannel payChannel, PayType payType, BaseOrder order) throws Exception {
+    public PrepayResult prepay(PayChannel payChannel, PayType payType, BaseOrder order, String code) throws Exception {
         checkPayChannelAndType(payChannel, payType);
         if (null == order) {
             throw new Exception(PayConstant.MSG_NOT_NULL_ORDER);
@@ -59,61 +60,76 @@ public class BasePay {
         PrepayResult result = new PrepayResult();
         if (payChannel == PayChannel.ALIPAY) {
             AlipayTradeWapPayResponse response = alipayHandler.prepayWap(payType, order);
-            result.setPrePayResult(response.getBody());
+            result.setUrl(response.getBody());
+            result.setMsg("OK");
             return result;
         }
         if (payChannel == PayChannel.WECHAT) {
             String url;
             if (payType == PayType.WECHAT_JSAPI_MP) {
                 url = wechatHandler.createJsapiCodeUrl(order.getOutTradeNo());
-                result.setPrePayResult(url);
+                result.setUrl(url);
+                result.setMsg("OK");
                 return result;
             }
-//            if (payType == PayType.WECHAT_JSAPI_MICRO) {
-//                url = wechatHandler.createJsapiOpenIdUrl(code);
-//                result.setPrePayResult(url);
-//                return result;
-//            }
+            if (payType == PayType.WECHAT_JSAPI_MICRO) {
+
+                Code2SessionResult r = wechatHandler.microPayGetOpenId(code);
+                WechatClientPayParam payParam = wechatHandler.prePayJsapiMicro(PayType.WECHAT_JSAPI_MICRO, order, r.getOpenid());
+                if (payParam != null) {
+                    MicroParam p = new MicroParam()
+                            .setPaySign(payParam.getPaySign())
+                            .setPackages(payParam.getPackages())
+                            .setTimeStamp(payParam.getTimeStamp())
+                            .setNonceStr(payParam.getNonceStr())
+                            .setSignType(payParam.getSignType());
+                    result.setMsg("OK");
+                    result.setParam(p);
+                    return result;
+                }
+                result.setMsg("ERROR");
+                result.setUrl("null");
+            }
         }
-        result.setPrePayResult(PayConstant.MSG_PAY_CHANNEL_SUPPORT);
+        result.setMsg(PayConstant.MSG_PAY_CHANNEL_SUPPORT);
         return result;
     }
 
 
-    /**
-     * 聚合支付：发起预支付(小程序)
-     *
-     * @param order      订单
-     * @param code 小程序前端登录获取的code
-     * @return
-     * @throws Exception
-     */
-    public WechatClientPayParam prepayMicro(BaseOrder order,String code) throws Exception {
-        // 参考地址 https://juejin.cn/post/7079049378983313438
-        // 1. 使用code 获得 openId
-        // 2. 调用统一下单，生成prepay_id （prePayJsapiMicro 调用 createClientPayParam）
-        // 3. 组装并返回给小程序前端 (WechatClientPayParam)
-        // 4. 用户在小程序支付
-        // 5. 回调
-        // 根据以上顺序，做个demo
-
-//        checkPayChannelAndType(payChannel, payType);
-        if (null == order) {
-            throw new Exception(PayConstant.MSG_NOT_NULL_ORDER);
-        }
-        Code2SessionResult result = wechatHandler.microPayGetOpenId(code);
-        WechatClientPayParam payParam = wechatHandler.prePayJsapiMicro(PayType.WECHAT_JSAPI_MICRO, order, result.getOpenid());
-        return payParam;
-
-//        PrepayResult result = new PrepayResult();
-
-//        url = wechatHandler.createJsapiOpenIdUrl(code);
-//        result.setPrePayResult(url);
-//        return result;
-
-//        result.setPrePayResult(PayConstant.MSG_PAY_CHANNEL_SUPPORT);
-//        return result;
-    }
+//    /**
+//     * 聚合支付：发起预支付(小程序)
+//     *
+//     * @param order      订单
+//     * @param code 小程序前端登录获取的code
+//     * @return
+//     * @throws Exception
+//     */
+//    public WechatClientPayParam prepayMicro(BaseOrder order,String code) throws Exception {
+//        // 参考地址 https://juejin.cn/post/7079049378983313438
+//        // 1. 使用code 获得 openId
+//        // 2. 调用统一下单，生成prepay_id （prePayJsapiMicro 调用 createClientPayParam）
+//        // 3. 组装并返回给小程序前端 (WechatClientPayParam)
+//        // 4. 用户在小程序支付
+//        // 5. 回调
+//        // 根据以上顺序，做个demo
+//
+////        checkPayChannelAndType(payChannel, payType);
+//        if (null == order) {
+//            throw new Exception(PayConstant.MSG_NOT_NULL_ORDER);
+//        }
+//        Code2SessionResult result = wechatHandler.microPayGetOpenId(code);
+//        WechatClientPayParam payParam = wechatHandler.prePayJsapiMicro(PayType.WECHAT_JSAPI_MICRO, order, result.getOpenid());
+//        return payParam;
+//
+////        PrepayResult result = new PrepayResult();
+//
+////        url = wechatHandler.createJsapiOpenIdUrl(code);
+////        result.setPrePayResult(url);
+////        return result;
+//
+////        result.setPrePayResult(PayConstant.MSG_PAY_CHANNEL_SUPPORT);
+////        return result;
+//    }
 
 
     /**

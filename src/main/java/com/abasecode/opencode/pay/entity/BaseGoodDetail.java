@@ -15,7 +15,8 @@ import java.io.Serializable;
 @Data
 @Accessors(chain = true)
 public class BaseGoodDetail implements Serializable {
-    private static final long serialVersionUID = 1L;
+
+    private static final long serialVersionUID = -1430461873606601291L;
     /**
      * 商品ID
      */

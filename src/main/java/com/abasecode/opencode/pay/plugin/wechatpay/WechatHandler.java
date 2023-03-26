@@ -55,6 +55,7 @@ public class WechatHandler {
 
     /**
      * 小程序支付，使用code获得openId
+     *
      * @param code 来自小程序前端传过来的值
      * @return openId等信息
      * @throws Exception

@@ -16,6 +16,7 @@ import java.io.Serializable;
 @Data
 @Accessors(chain = true)
 public class BaseOrderAlipay implements Serializable {
+
     private static final long serialVersionUID = 8579515877126502990L;
     /**
      * 支付宝：针对用户授权接口，获取用户相关数据时，用于标识用户授权关系
