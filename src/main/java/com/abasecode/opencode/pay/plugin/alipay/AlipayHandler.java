@@ -173,7 +173,7 @@ public class AlipayHandler {
      * 查询支付情况
      *
      * @param param
-     * @return
+     * @return AlipayTradeQueryResponse
      * @throws AlipayApiException
      */
     public AlipayTradeQueryResponse payQuery(AlipayTradeQueryModel param) throws AlipayApiException {
@@ -190,7 +190,7 @@ public class AlipayHandler {
      * 退款
      *
      * @param param
-     * @return
+     * @return AlipayTradeRefundResponse
      * @throws AlipayApiException
      */
     public AlipayTradeRefundResponse payRefund(AlipayTradeRefundModel param) throws AlipayApiException {
@@ -206,7 +206,7 @@ public class AlipayHandler {
      * 退款
      *
      * @param bizContent
-     * @return
+     * @return AlipayTradeRefundResponse
      * @throws AlipayApiException
      */
     public AlipayTradeRefundResponse payRefund(JSONObject bizContent) throws AlipayApiException {
@@ -275,7 +275,7 @@ public class AlipayHandler {
     /**
      * 封装支付宝客户端
      *
-     * @return
+     * @return AlipayClient
      */
     private AlipayClient createAlipayClient() {
         AlipayClient alipayClient = new DefaultAlipayClient(AliConstant.URL_GATEWAY, AliConstant.appid,

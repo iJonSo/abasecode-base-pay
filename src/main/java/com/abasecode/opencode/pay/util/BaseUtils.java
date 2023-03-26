@@ -147,7 +147,7 @@ public class BaseUtils {
      * 分转元字符串(int)
      *
      * @param m
-     * @return
+     * @return String
      */
     public static String getYuanFromFen(int m) {
         return BigDecimal.valueOf(m / 100.00).toString();
@@ -168,7 +168,7 @@ public class BaseUtils {
      * 元字符串转分(int)
      *
      * @param m
-     * @return
+     * @return int
      */
     public static int getFenFromYuan(String m) {
         if (StringUtils.isNotBlank(getValue(m))) {
@@ -193,7 +193,7 @@ public class BaseUtils {
 
     /**
      * @param d
-     * @return
+     * @return string
      */
     public static String getDateTimeStringFromRFC3339(Date d) {
         LocalDateTime date = LocalDateTime.parse(d.toString(), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
@@ -202,7 +202,7 @@ public class BaseUtils {
 
     /**
      * @param dateString
-     * @return
+     * @return LocalDateTime
      */
     public static LocalDateTime getDateTimeFromRFC3339(String dateString) {
         if (StringUtils.isBlank(dateString)) {
@@ -245,7 +245,7 @@ public class BaseUtils {
      * 获取字符串值
      *
      * @param o
-     * @return
+     * @return string
      */
     public static String getValue(Object o) {
         if (null != o) {

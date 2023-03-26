@@ -122,7 +122,7 @@ public class Wechat {
      * @param payType
      * @param baseOrder
      * @param payer
-     * @return
+     * @return Pay4Jsapi
      */
     private Pay4Jsapi createJsapiOrderParams(PayType payType, BaseOrder baseOrder, Payer payer) {
         AmountOrder amount = new AmountOrder()
