@@ -132,33 +132,34 @@ public class BasePay {
 //    }
 
 
-//    /**
-//     * 聚合支付：获得预支付参数（仅微信）
-//     *
-//     * @param payChannel   通道
-//     * @param payType      支付类型
-//     * @param order        订单
-//     * @param codeOrOpenId code或openId（code是公众号，openId是小程序）
-//     * @return
-//     */
-//    public WechatClientPayParam prepayStep2(PayChannel payChannel, PayType payType, BaseOrder order, String codeOrOpenId) throws Exception {
-//        checkPayChannelAndType(payChannel, payType);
-//        if (null == order) {
-//            throw new Exception(PayConstant.MSG_NOT_NULL_ORDER);
-//        }
-//        if (StringUtils.isBlank(codeOrOpenId)) {
-//            throw new Exception(PayConstant.MSG_NOT_NULL_PAY_CODE_OPENID);
-//        }
-//        if (payChannel == PayChannel.WECHAT) {
-//            if (payType == PayType.WECHAT_JSAPI_MP) {
-//                return wechatHandler.prePayJsapiMp(payType, order, codeOrOpenId);
-//            }
+    /**
+     * 聚合支付：获得预支付参数（仅微信）
+     *
+     * @param payChannel   通道
+     * @param payType      支付类型
+     * @param order        订单
+     * @param codeOrOpenId code或openId（code是公众号，openId是小程序）
+     * @return WechatClientPayParam
+     */
+    public WechatClientPayParam prepayStep2(PayChannel payChannel, PayType payType, BaseOrder order, String codeOrOpenId) throws Exception {
+        System.out.println("prepayStep2调用");
+        checkPayChannelAndType(payChannel, payType);
+        if (null == order) {
+            throw new Exception(PayConstant.MSG_NOT_NULL_ORDER);
+        }
+        if (StringUtils.isBlank(codeOrOpenId)) {
+            throw new Exception(PayConstant.MSG_NOT_NULL_PAY_CODE_OPENID);
+        }
+        if (payChannel == PayChannel.WECHAT) {
+            if (payType == PayType.WECHAT_JSAPI_MP) {
+                return wechatHandler.prePayJsapiMp(payType, order, codeOrOpenId);
+            }
 //            if (payType == PayType.WECHAT_JSAPI_MICRO) {
 //                return wechatHandler.prePayJsapiMicro(payType, order, codeOrOpenId);
 //            }
-//        }
-//        throw new Exception(PayConstant.MSG_PAY_CHANNEL_ONLY_WECHAT);
-//    }
+        }
+        throw new Exception(PayConstant.MSG_PAY_CHANNEL_ONLY_WECHAT);
+    }
 
     /**
      * 查询订单
