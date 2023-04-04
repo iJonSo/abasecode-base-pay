@@ -34,7 +34,7 @@ public enum PayStatus {
     /**
      *
      */
-    TRADE_FAILED(5, "交易失败"),
+    TRADE_FAILED(6, "交易失败"),
     /**
      * 未知状态
      */
