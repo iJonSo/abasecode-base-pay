@@ -194,7 +194,7 @@ public class BasePay {
                     .setPayChannel(form.getPayChannel())
                     .setOutTradeNo(form.getOutTradeNo())
                     .setTradeNo(response.getTransactionId())
-                    .setPayStatus(getPayStatus(form.getPayChannel(), response.getTradeType()))
+                    .setPayStatus(getPayStatus(form.getPayChannel(), response.getTradeState()))
                     .setTotalAmount(Integer.parseInt(response.getAmount().getTotal() + ""))
                     .setTotalAmountMoney(getYuanFromFen(result.getTotalAmount()))
                     .setPayAmount(Integer.parseInt(response.getAmount().getPayerTotal() + ""))
